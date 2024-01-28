@@ -9,3 +9,10 @@ for plugin in $(echo "$plugins_list" | tr ',' '\n')
 do
   /app/mattermost/bin/mattermost plugin add "$plugin"
 done
+
+plugins_list_2=$(find /app/postdeploy_plugins/. -maxdepth 1 -name '*.tar.gz' | tr '\n' ',')
+
+for plugin in $(echo "$plugins_list_2" | tr ',' '\n')
+do
+  /app/mattermost/bin/mattermost plugin add "$plugin"
+done
