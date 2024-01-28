@@ -82,7 +82,7 @@ echo "MM"
 echo $MATTERMOST_GITHUB_PLUGINS
 
 if [[ -n $MATTERMOST_GITHUB_PLUGINS ]]; then  
-  install_github_plugins_list "$BUILD_DIR/mattermost/client/plugins" "${MATTERMOST_GITHUB_PLUGINS}"
+  install_github_plugins_list "$BUILD_DIR/mattermost/prepackaged_plugins" "${MATTERMOST_GITHUB_PLUGINS}"
 else
   info "No plugins from Github to install"
 fi
