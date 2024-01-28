@@ -75,21 +75,11 @@ function fetch_github_latest_release() {
   local repo="$1"
   local http_code
   http_code=$($CURL -G -o "$TMP_PATH/latest_release.json" -w '%{http_code}' -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${repo}/releases/latest")
-  info $http_code
-  info "1"
-  info $plugin_url
-  info "2"
   local plugin_url
   if [[ $http_code == 200 ]]; then
-    plugin_url=$(cat "$TMP_PATH/latest_release.json" | jq '.assets[0].browser_download_url' | xargs)
-    echo $plugin_url
-    info "3"
+    plugin_url=$(cat "$TMP_PATH/latest_release.json" | jq 'if (.assets | length < 2) then .assets[0].browser_download_url else .assets[] | select(.name|test("linux_amd64";"ix")) | .browser_download_url end' | xargs)
     plugin_url="${plugin_url%\"}"
-    echo $plugin_url
-    info "4"
     plugin_url="${plugin_url#\"}"
-    echo $plugin_url
-    info "5"
   fi
   echo "$plugin_url"
 }
@@ -102,9 +92,6 @@ function install_github_plugins_list() {
   for plugin_id in $(echo "$plugins_list" | tr ',' '\n')
   do
     plugin_url=$(fetch_github_latest_release "$plugin_id")
-    info "plugin_url"
-    info $plugin_url
-    info $location
     info "Plugin id to install: ${plugin_id}"
     if [[ -n $plugin_url ]]; then
       install_plugin "$location" "$plugin_url"
