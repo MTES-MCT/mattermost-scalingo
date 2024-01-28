@@ -81,7 +81,7 @@ function fetch_github_latest_release() {
   info "2"
   local plugin_url
   if [[ $http_code == 200 ]]; then
-    plugin_url=$(cat "$TMP_PATH/latest_release.json" | jq 'if (.assets | length < 2) then .assets[0].browser_download_url else .assets[] | select(.name|test("linux_amd64";"ix")) | .browser_download_url end' | xargs)
+    plugin_url=$(cat "$TMP_PATH/latest_release.json" | jq '.assets[0].browser_download_url' | xargs)
     echo $plugin_url
     info "3"
     plugin_url="${plugin_url%\"}"
