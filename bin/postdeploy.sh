@@ -8,5 +8,5 @@ info $plugins_list
 for plugin in $(echo "$plugins_list" | tr ',' '\n')
 do
   info $plugin
-  /app/mattermost/bin/mattermost plugin add "$plugin"
+  /app/mattermost/bin/mmctl plugin add "$plugin"
 done
