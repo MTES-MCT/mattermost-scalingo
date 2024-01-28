@@ -65,6 +65,8 @@ if [[ -f "${ENV_DIR}/MATTERMOST_MARKETPLACE_PLUGINS" ]]; then
 else
   MATTERMOST_MARKETPLACE_PLUGINS=""
 fi
+echo "MM"
+echo $MATTERMOST_GITHUB_PLUGINS
 if [[ -n $MATTERMOST_MARKETPLACE_PLUGINS ]]; then  
   install_marketplace_plugins_list "$BUILD_DIR/mattermost/postdeploy_plugins" "${MATTERMOST_VERSION}" "${MATTERMOST_MARKETPLACE_PLUGINS}"
 else
