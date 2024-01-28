@@ -92,6 +92,9 @@ function install_github_plugins_list() {
   for plugin_id in $(echo "$plugins_list" | tr ',' '\n')
   do
     plugin_url=$(fetch_github_latest_release "$plugin_id")
+    info "plugin_url"
+    info $plugin_url
+    info $location
     info "Plugin id to install: ${plugin_id}"
     if [[ -n $plugin_url ]]; then
       install_plugin "$location" "$plugin_url"
