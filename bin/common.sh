@@ -77,7 +77,7 @@ function fetch_github_latest_release() {
   http_code=$($CURL -G -o "$TMP_PATH/latest_release.json" -w '%{http_code}' -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${repo}/releases/latest")
   local plugin_url
   if [[ $http_code == 200 ]]; then
-    plugin_url=$(cat "$TMP_PATH/latest_release.json" | jq 'if (.assets | length < 2) then .assets[0].browser_download_url else .assets[] | select(.name|test("linux_amd64";"ix")) | .browser_download_url end' | xargs)
+    plugin_url=$(cat "$TMP_PATH/latest_release.json" | jq '.assets[0].browser_download_url' | xargs)
     plugin_url="${plugin_url%\"}"
     plugin_url="${plugin_url#\"}"
   fi
