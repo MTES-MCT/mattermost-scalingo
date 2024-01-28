@@ -72,23 +72,6 @@ else
 fi
 finished
 
-start "Install plugins list from custom marketplace"
-if [[ ! -d "$MATTERMOST_PATH/../postdeploy_plugins" ]]; then
-  mkdir -p "$MATTERMOST_PATH/../postdeploy_plugins"
-fi
-if [[ -f "${ENV_DIR}/MATTERMOST_MARKETPLACE_PLUGINS" ]]; then
-  MATTERMOST_MARKETPLACE_PLUGINS=$(cat "$ENV_DIR/MATTERMOST_MARKETPLACE_PLUGINS")
-else
-  MATTERMOST_MARKETPLACE_PLUGINS=""
-fi
-info MATTERMOST_MARKETPLACE_PLUGINS
-if [[ -n $MATTERMOST_MARKETPLACE_PLUGINS ]]; then  
-  install_marketplace_plugins_list "$BUILD_DIR/postdeploy_plugins" "${MATTERMOST_VERSION}" "${MATTERMOST_MARKETPLACE_PLUGINS}"
-else
-  info "No plugins from marketplace to install"
-fi
-finished
-
 start "Install plugins list from Github"
 if [[ -f "${ENV_DIR}/MATTERMOST_GITHUB_PLUGINS" ]]; then
   MATTERMOST_GITHUB_PLUGINS=$(cat "$ENV_DIR/MATTERMOST_GITHUB_PLUGINS")
@@ -99,7 +82,7 @@ echo "MM"
 echo $MATTERMOST_GITHUB_PLUGINS
 
 if [[ -n $MATTERMOST_GITHUB_PLUGINS ]]; then  
-  install_github_plugins_list "$BUILD_DIR/mattermost/postdeploy_plugins" "${MATTERMOST_GITHUB_PLUGINS}"
+  install_github_plugins_list "$BUILD_DIR/mattermost/client/plugins" "${MATTERMOST_GITHUB_PLUGINS}"
 else
   info "No plugins from Github to install"
 fi
